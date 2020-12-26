@@ -13,4 +13,4 @@ Sklearn>=0.0
 nltk==3.5
 pickleshare==0.7.5
 keras>=2.3.1
-tensorflow==1.15
+tensorflow==2.4.0
