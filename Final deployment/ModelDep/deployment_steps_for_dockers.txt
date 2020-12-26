@@ -1,0 +1,451 @@
+C:\Dev\ModelDep\StockPredDocker>docker build --tag stock_pred:1.0 .
+Sending build context to Docker daemon  65.02kB
+Step 1/13 : FROM python:3.7
+3.7: Pulling from library/python
+e9afc4f90ab0: Pull complete                                                                                             989e6b19a265: Pull complete                                                                                             af14b6c2f878: Pull complete                                                                                             5573c4b30949: Pull complete                                                                                             11a88e764313: Pull complete                                                                                             ee776f0e36af: Pull complete                                                                                             9075e1fb5d17: Pull complete                                                                                             7882db2cc9d4: Pull complete                                                                                             955a532dd46c: Pull complete                                                                                             Digest: sha256:c1e36afba1c3c230a6846801fb284cf4383a8a0080fcf32c2ec625c066c56361
+Status: Downloaded newer image for python:3.7
+ ---> e4e55e98f1e0
+Step 2/13 : MAINTAINER Aman Kumar <amank56@gmail.com>
+ ---> Running in a37cf5dd8001
+Removing intermediate container a37cf5dd8001
+ ---> 2a1e4766867c
+Step 3/13 : ENV PYTHONDONTWRITEBYTECODE 1
+ ---> Running in e08c05b59464
+Removing intermediate container e08c05b59464
+ ---> 2dfdc3a5879f
+Step 4/13 : ENV PYTHONUNBUFFERED 1
+ ---> Running in 7951b9e40945
+Removing intermediate container 7951b9e40945
+ ---> 2a4ac8f31213
+Step 5/13 : RUN apt-get update     && apt-get -y install gcc make     && rm -rf /var/lib/apt/lists/*
+ ---> Running in fa750af56e1c
+Get:1 http://deb.debian.org/debian buster InRelease [121 kB]
+Get:2 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
+Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
+Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [203 kB]
+Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7905 kB]
+Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7868 B]
+Fetched 8355 kB in 4s (2366 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+gcc is already the newest version (4:8.3.0-1).
+make is already the newest version (4.2.1-1.2).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Removing intermediate container fa750af56e1c
+ ---> db0fe579579c
+Step 6/13 : RUN pip install --no-cache-dir --upgrade pip
+ ---> Running in 0138b1cf32f7
+Requirement already up-to-date: pip in /usr/local/lib/python3.7/site-packages (20.1.1)
+Removing intermediate container 0138b1cf32f7
+ ---> 8b982f783eb2
+Step 7/13 : WORKDIR /src/app
+ ---> Running in e3ae4554b02b
+Removing intermediate container e3ae4554b02b
+ ---> 59824b9cba82
+Step 8/13 : COPY ./requirements.txt /src/app/requirements.txt
+ ---> 72282c1cc153
+Step 9/13 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Running in c70fb34ae67f
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting gunicorn==19.9.0
+  Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+Collecting itsdangerous==1.1.0
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2==2.10.1
+  Downloading Jinja2-2.10.1-py2.py3-none-any.whl (124 kB)
+Collecting MarkupSafe==1.1.1
+  Downloading MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl (27 kB)
+Collecting Werkzeug==0.15.5
+  Downloading Werkzeug-0.15.5-py2.py3-none-any.whl (328 kB)
+Collecting numpy>=1.9.2
+  Downloading numpy-1.18.5-cp37-cp37m-manylinux1_x86_64.whl (20.1 MB)
+Collecting scipy>=0.15.1
+  Downloading scipy-1.4.1-cp37-cp37m-manylinux1_x86_64.whl (26.1 MB)
+Collecting scikit-learn>=0.18
+  Downloading scikit_learn-0.23.1-cp37-cp37m-manylinux1_x86_64.whl (6.8 MB)
+Collecting matplotlib>=1.4.3
+  Downloading matplotlib-3.2.1-cp37-cp37m-manylinux1_x86_64.whl (12.4 MB)
+Collecting pandas>=0.19
+  Downloading pandas-1.0.4-cp37-cp37m-manylinux1_x86_64.whl (10.1 MB)
+Collecting Sklearn>=0.0
+  Downloading sklearn-0.0.tar.gz (1.1 kB)
+Collecting nltk==3.5
+  Downloading nltk-3.5.zip (1.4 MB)
+Collecting pickleshare==0.7.5
+  Downloading pickleshare-0.7.5-py2.py3-none-any.whl (6.9 kB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting threadpoolctl>=2.0.0
+  Downloading threadpoolctl-2.1.0-py3-none-any.whl (12 kB)
+Collecting joblib>=0.11
+  Downloading joblib-0.15.1-py3-none-any.whl (298 kB)
+Collecting python-dateutil>=2.1
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting cycler>=0.10
+  Downloading cycler-0.10.0-py2.py3-none-any.whl (6.5 kB)
+Collecting kiwisolver>=1.0.1
+  Downloading kiwisolver-1.2.0-cp37-cp37m-manylinux1_x86_64.whl (88 kB)
+Collecting pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1
+  Downloading pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+Collecting pytz>=2017.2
+  Downloading pytz-2020.1-py2.py3-none-any.whl (510 kB)
+Collecting regex
+  Downloading regex-2020.6.8-cp37-cp37m-manylinux2010_x86_64.whl (661 kB)
+Collecting tqdm
+  Downloading tqdm-4.46.1-py2.py3-none-any.whl (63 kB)
+Collecting six>=1.5
+  Downloading six-1.15.0-py2.py3-none-any.whl (10 kB)
+Building wheels for collected packages: Sklearn, nltk
+  Building wheel for Sklearn (setup.py): started
+  Building wheel for Sklearn (setup.py): finished with status 'done'
+  Created wheel for Sklearn: filename=sklearn-0.0-py2.py3-none-any.whl size=1315 sha256=3e5f827ff4026cb6a3b60096c1cb3a47a85584702c3374e67729280b84d95962
+  Stored in directory: /tmp/pip-ephem-wheel-cache-8gn5jy5x/wheels/46/ef/c3/157e41f5ee1372d1be90b09f74f82b10e391eaacca8f22d33e
+  Building wheel for nltk (setup.py): started
+  Building wheel for nltk (setup.py): finished with status 'done'
+  Created wheel for nltk: filename=nltk-3.5-py3-none-any.whl size=1434677 sha256=2e974816bfe89f50a056ca9c6fca2b0afb5d7497ea7d9a82630fb2919e913a08
+  Stored in directory: /tmp/pip-ephem-wheel-cache-8gn5jy5x/wheels/45/6c/46/a1865e7ba706b3817f5d1b2ff7ce8996aabdd0d03d47ba0266
+Successfully built Sklearn nltk
+Installing collected packages: itsdangerous, click, Werkzeug, MarkupSafe, Jinja2, Flask, gunicorn, numpy, scipy, threadpoolctl, joblib, scikit-learn, six, python-dateutil, cycler, kiwisolver, pyparsing, matplotlib, pytz, pandas, Sklearn, regex, tqdm, nltk, pickleshare
+Successfully installed Flask-1.1.2 Jinja2-2.10.1 MarkupSafe-1.1.1 Sklearn-0.0 Werkzeug-0.15.5 click-7.1.2 cycler-0.10.0 gunicorn-19.9.0 itsdangerous-1.1.0 joblib-0.15.1 kiwisolver-1.2.0 matplotlib-3.2.1 nltk-3.5 numpy-1.18.5 pandas-1.0.4 pickleshare-0.7.5 pyparsing-2.4.7 python-dateutil-2.8.1 pytz-2020.1 regex-2020.6.8 scikit-learn-0.23.1 scipy-1.4.1 six-1.15.0 threadpoolctl-2.1.0 tqdm-4.46.1
+Removing intermediate container c70fb34ae67f
+ ---> 01fa35ac56f4
+Step 10/13 : WORKDIR /src/app
+ ---> Running in 25d3de5f6d8e
+Removing intermediate container 25d3de5f6d8e
+ ---> a80cf5167cb9
+Step 11/13 : EXPOSE 8080
+ ---> Running in 2b9d0a911bef
+Removing intermediate container 2b9d0a911bef
+ ---> 250815d7393e
+Step 12/13 : ENTRYPOINT [ "python" ]
+ ---> Running in a2292e688e56
+Removing intermediate container a2292e688e56
+ ---> 2b686ab9e02b
+Step 13/13 : CMD [ "app.py","run","--host","0.0.0.0"]
+ ---> Running in 1fbaa633a52f
+Removing intermediate container 1fbaa633a52f
+ ---> 7f0e1325eb90
+Successfully built 7f0e1325eb90
+Successfully tagged stock_pred:1.0
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+
+C:\Dev\ModelDep\StockPredDocker>docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+stock_pred              1.0                 7f0e1325eb90        16 seconds ago      1.21GB
+python                  3.7                 e4e55e98f1e0        6 days ago          919MB
+jupyter/base-notebook   latest              c207e7de43e4        6 months ago        591MB
+python                  3.6.5-alpine3.7     5be6d36f77ee        2 years ago         89.9MB
+
+C:\Dev\ModelDep\StockPredDocker>docker run --name deployML -p 8080:8080 stock_pred:1.0
+python: can't open file 'app.py': [Errno 2] No such file or directory
+
+C:\Dev\ModelDep\StockPredDocker>docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+C:\Dev\ModelDep\StockPredDocker>docker run --name deployML -p 8080:8080 stock_pred:1.0
+docker: Error response from daemon: Conflict. The container name "/deployML" is already in use by container "d5bcf2b874e341adeb04def6be0b1a3b2fe747cf806f1f8ed4b713d1e00eccaa". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+C:\Dev\ModelDep\StockPredDocker>docker
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default
+                           "C:\\Users\\amank\\.docker")
+  -c, --context string     Name of the context to use to connect to the
+                           daemon (overrides DOCKER_HOST env var and
+                           default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level
+                           ("debug"|"info"|"warn"|"error"|"fatal")
+                           (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default
+                           "C:\\Users\\amank\\.docker\\ca.pem")
+      --tlscert string     Path to TLS certificate file (default
+                           "C:\\Users\\amank\\.docker\\cert.pem")
+      --tlskey string      Path to TLS key file (default
+                           "C:\\Users\\amank\\.docker\\key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  builder     Manage builds
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+
+C:\Dev\ModelDep\StockPredDocker>docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+C:\Dev\ModelDep\StockPredDocker>docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS                    NAMES
+d5bcf2b874e3        stock_pred:1.0      "python app.py run -…"   4 minutes ago       Exited (2) 4 minutes ago                             deployML
+8bfdcd3dcaec        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              tender_wright
+1f677547a9e4        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              happy_moore
+d20813b4042c        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (255) 4 months ago   0.0.0.0:8888->8888/tcp   nice_boyd
+1224f498aa89        5be6d36f77ee        "python3"                5 months ago        Exited (0) 5 months ago                              agitated_lumiere
+0d7df5bcffb3        c207e7de43e4        "tini -g -- start-no…"   5 months ago        Exited (255) 5 months ago   0.0.0.0:8888->8888/tcp   gallant_moore
+
+C:\Dev\ModelDep\StockPredDocker>docker exec -it d5bcf2b874e3 bash
+Error response from daemon: Container d5bcf2b874e341adeb04def6be0b1a3b2fe747cf806f1f8ed4b713d1e00eccaa is not running
+
+C:\Dev\ModelDep\StockPredDocker>docker exec run -it d5bcf2b874e3
+Error: No such container: run
+
+C:\Dev\ModelDep\StockPredDocker>docker run -it d5bcf2b874e3
+Unable to find image 'd5bcf2b874e3:latest' locally
+docker: Error response from daemon: pull access denied for d5bcf2b874e3, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+See 'docker run --help'.
+
+C:\Dev\ModelDep\StockPredDocker>docker start d5bcf2b874e3
+d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker exec run -it d5bcf2b874e3
+Error: No such container: run
+
+C:\Dev\ModelDep\StockPredDocker>docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS                    NAMES
+d5bcf2b874e3        stock_pred:1.0      "python app.py run -…"   6 minutes ago       Exited (2) 10 seconds ago                            deployML
+8bfdcd3dcaec        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              tender_wright
+1f677547a9e4        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              happy_moore
+d20813b4042c        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (255) 4 months ago   0.0.0.0:8888->8888/tcp   nice_boyd
+1224f498aa89        5be6d36f77ee        "python3"                5 months ago        Exited (0) 5 months ago                              agitated_lumiere
+0d7df5bcffb3        c207e7de43e4        "tini -g -- start-no…"   5 months ago        Exited (255) 5 months ago   0.0.0.0:8888->8888/tcp   gallant_moore
+
+C:\Dev\ModelDep\StockPredDocker>docker start d5bcf2b874e3
+d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker start d5bcf2b874e3
+d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker start d5bcf2b874e3
+d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS                    NAMES
+d5bcf2b874e3        stock_pred:1.0      "python app.py run -…"   7 minutes ago       Exited (2) 2 seconds ago                             deployML
+8bfdcd3dcaec        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              tender_wright
+1f677547a9e4        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (0) 4 months ago                              happy_moore
+d20813b4042c        c207e7de43e4        "tini -g -- start-no…"   4 months ago        Exited (255) 4 months ago   0.0.0.0:8888->8888/tcp   nice_boyd
+1224f498aa89        5be6d36f77ee        "python3"                5 months ago        Exited (0) 5 months ago                              agitated_lumiere
+0d7df5bcffb3        c207e7de43e4        "tini -g -- start-no…"   5 months ago        Exited (255) 5 months ago   0.0.0.0:8888->8888/tcp   gallant_moore
+
+C:\Dev\ModelDep\StockPredDocker>docker image rm -7f0e1325eb90
+unknown shorthand flag: '7' in -7f0e1325eb90
+See 'docker image rm --help'.
+
+C:\Dev\ModelDep\StockPredDocker>docker image rm 7f0e1325eb90
+Error response from daemon: conflict: unable to delete 7f0e1325eb90 (must be forced) - image is being used by stopped container d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker rm d5bcf2b874e3
+d5bcf2b874e3
+
+C:\Dev\ModelDep\StockPredDocker>docker image rm 7f0e1325eb90
+Untagged: stock_pred:1.0
+Deleted: sha256:7f0e1325eb908cb9fad0bffd81e2c69238f18f4ddcb50c1a8b7392f0a2963f74
+Deleted: sha256:2b686ab9e02ba271b0def59e34bb1a3818b12c20f915163faa07835b05ab7595
+Deleted: sha256:250815d7393e527e71ddb34f792e935f231993b032986b636defc06f771171a7
+Deleted: sha256:a80cf5167cb911525ed98f9db587a16e5ba312664c38a0f861ec439041271343
+Deleted: sha256:01fa35ac56f4e39cdaeccba36f1972b6061f51824450fd16b9b38d54f50b4b41
+Deleted: sha256:a96ab5418599fa58a236c3098a0b24e3108b7098441b21a06a8eec4c0ad4d30e
+Deleted: sha256:72282c1cc153e03b8fd5b877ed69b7224ff3d2a81caf575993242cf6cdcbc340
+Deleted: sha256:280b5d3ac91c5cf226398bb8ce737fb7deb0866a59c1bbe814dc42d6a2b3d7e2
+Deleted: sha256:59824b9cba827b6c785c40dde32a47728b683ad40630d6cbf58f8c201daa381f
+Deleted: sha256:855ad680b84158b77066174673bdfbc8492a213ce05a203b60cacb9e61adae3e
+Deleted: sha256:8b982f783eb24318e185f0b9e7eccdab0bc867e042e9a205b73f50335dc242dd
+Deleted: sha256:3a8aacf80001f54cd301bbf8c70b501ceac793267f28b2dd0c2aff3c21f2d29c
+Deleted: sha256:db0fe579579c11de47cd6578fb9a2edd465090c648f1c28e1f9f8c25fcfa667c
+Deleted: sha256:ed5392506252878b51027098e95bd485f46f8b72c288fb18aaead98ac3b92a63
+Deleted: sha256:2a4ac8f312130622df3a3eb8a8dbb89ac310b4a315f76bd09f26719995f4d845
+Deleted: sha256:2dfdc3a5879f2cba0a63e8f36dd4adba46ddc0e017cf6ece9d5bab2e874dd1cb
+Deleted: sha256:2a1e4766867c0a07e807c251f47c792e5516880346b152ece59899014bb26eaa
+
+C:\Dev\ModelDep\StockPredDocker>docker impages
+docker: 'impages' is not a docker command.
+See 'docker --help'
+
+C:\Dev\ModelDep\StockPredDocker>docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+python                  3.7                 e4e55e98f1e0        6 days ago          919MB
+jupyter/base-notebook   latest              c207e7de43e4        6 months ago        591MB
+python                  3.6.5-alpine3.7     5be6d36f77ee        2 years ago         89.9MB
+
+C:\Dev\ModelDep\StockPredDocker>docker image rm e4e55e98f1e0
+Untagged: python:3.7
+Untagged: python@sha256:c1e36afba1c3c230a6846801fb284cf4383a8a0080fcf32c2ec625c066c56361
+Deleted: sha256:e4e55e98f1e0e22860655ead7c3f31375e23975702050ef73ebfe8df3acb162d
+Deleted: sha256:c793bd03eb8358f705117d76b7a95e3b74aaeb4104c65b2dfc9d3865d37060e8
+Deleted: sha256:61b12851a33f27a7003688324d75ff145c001d4233328c6471dd73eacfc0bbd5
+Deleted: sha256:a340a73682c48571ffbdc51906b37c179a7c57b1ef30541339728e5bf68a66a8
+Deleted: sha256:394707a304bf9800c3a41e3e39c631a799a8b81cc2498ef7e9e0bcc92dadf3d9
+Deleted: sha256:3338f00f687e1148db3db12c0c97bac53997c33a11cb71349a3e1e3c541f8717
+Deleted: sha256:f863ffb247f4c239aeccf155b7c0d92e35403aed0c825690f6739a89a5901a7c
+Deleted: sha256:d39c04f36d47ec7121d94577c33c2792aa6e5a5a2c1130ea0be67a96d4e42ba5
+Deleted: sha256:7ef5d661de63acc27e877ff7098e93fd9d915f9688e8b585af1b3cccafd76243
+Deleted: sha256:8803ef42039dcbe936755e9baae4bb7b19cb0fb6a438eb3992950cd0afef8e4f
+
+C:\Dev\ModelDep\StockPredDocker>docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+jupyter/base-notebook   latest              c207e7de43e4        6 months ago        591MB
+python                  3.6.5-alpine3.7     5be6d36f77ee        2 years ago         89.9MB
+
+C:\Dev\ModelDep\StockPredDocker>docker build --tag stock_pred:1.0 .
+Sending build context to Docker daemon  65.02kB
+Step 1/11 : FROM python:3.7
+3.7: Pulling from library/python
+e9afc4f90ab0: Pull complete                                                                                             989e6b19a265: Pull complete                                                                                             af14b6c2f878: Pull complete                                                                                             5573c4b30949: Pull complete                                                                                             11a88e764313: Pull complete                                                                                             ee776f0e36af: Pull complete                                                                                             9075e1fb5d17: Pull complete                                                                                             7882db2cc9d4: Pull complete                                                                                             955a532dd46c: Pull complete                                                                                             Digest: sha256:c1e36afba1c3c230a6846801fb284cf4383a8a0080fcf32c2ec625c066c56361
+Status: Downloaded newer image for python:3.7
+ ---> e4e55e98f1e0
+Step 2/11 : MAINTAINER Aman Kumar <amank56@gmail.com>
+ ---> Running in 9fd27c5b95a1
+Removing intermediate container 9fd27c5b95a1
+ ---> 37ee004eebb5
+Step 3/11 : ENV PYTHONDONTWRITEBYTECODE 1
+ ---> Running in 891b60690ee0
+Removing intermediate container 891b60690ee0
+ ---> 435d1f5b3087
+Step 4/11 : ENV PYTHONUNBUFFERED 1
+ ---> Running in 9424d3d2ab71
+Removing intermediate container 9424d3d2ab71
+ ---> 613c3579f3ac
+Step 5/11 : RUN apt-get update     && apt-get -y install gcc make     && rm -rf /var/lib/apt/lists/*
+ ---> Running in 0ff64c3a85f2
+Get:1 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
+Get:2 http://deb.debian.org/debian buster InRelease [121 kB]
+Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
+Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [203 kB]
+Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7905 kB]
+Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7868 B]
+Fetched 8355 kB in 4s (2064 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+gcc is already the newest version (4:8.3.0-1).
+make is already the newest version (4.2.1-1.2).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Removing intermediate container 0ff64c3a85f2
+ ---> b7bd0a75b0e1
+Step 6/11 : RUN pip install --no-cache-dir --upgrade pip
+ ---> Running in 3b649f322dc8
+Requirement already up-to-date: pip in /usr/local/lib/python3.7/site-packages (20.1.1)
+Removing intermediate container 3b649f322dc8
+ ---> 470db82fba93
+Step 7/11 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Running in 07805ab2a0b0
+ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+The command '/bin/sh -c pip install --no-cache-dir -r requirements.txt' returned a non-zero code: 1
+
+C:\Dev\ModelDep\StockPredDocker>docker image
+
+
+
+
+C:\Dev\ModelDep\StockPredDocker>docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED              SIZE
+<none>                  <none>              470db82fba93        About a minute ago   919MB
+python                  3.7                 e4e55e98f1e0        6 days ago           919MB
+jupyter/base-notebook   latest              c207e7de43e4        6 months ago         591MB
+python                  3.6.5-alpine3.7     5be6d36f77ee        2 years ago          89.9MB
+
+
+
+C:\Dev\ModelDep\StockPredDocker>docker run --name deployML1 -p 8080:8080 stock_pred:1.0
+[nltk_data] Downloading package wordnet to /root/nltk_data...
+[nltk_data]   Unzipping corpora/wordnet.zip.
+/usr/local/lib/python3.7/site-packages/sklearn/base.py:334: UserWarning: Trying to unpickle estimator MultinomialNB from version 0.22.1 when using version 0.23.1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+
+C:\Dev\ModelDep\StockPredDocker>docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
+45c6e1682469        stock_pred:1.0      "python app.py run -…"   About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp   deployML1
+
+
+C:\Dev\ModelDep\StockPredDocker>docker exec -it 45c6e1682469 bash
+root@45c6e1682469:/# ls
+app.py  boot  etc   lib    media  model.pkl  proc              root  sbin  sys        tmp  var
+bin     dev   home  lib64  mnt    opt        requirements.txt  run   srv   templates  usr  vectorfeature.pkl
+root@45c6e1682469:/# cd templates/
+root@45c6e1682469:/templates# ls
+index.html
+root@45c6e1682469:/templates# exit
+exit
+
+C:\Dev\ModelDep\StockPredDocker>docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+stock_pred              1.0                 1a2c49779928        7 minutes ago       1.21GB
+<none>                  <none>              2d7db1a61a77        15 minutes ago      1.21GB
+python                  3.7                 e4e55e98f1e0        6 days ago          919MB
+jupyter/base-notebook   latest              c207e7de43e4        6 months ago        591MB
+python                  3.6.5-alpine3.7     5be6d36f77ee        2 years ago         89.9MB
+
+C:\Dev\ModelDep\StockPredDocker>
